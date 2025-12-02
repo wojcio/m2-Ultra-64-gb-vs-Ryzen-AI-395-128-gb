@@ -95,3 +95,54 @@ If you run a **Llama-3-70B** model:
 *   **You need Speed:** You want chat responses to feel instant.
 *   **You stick to 8B - 35B models:** If you mostly run models like Mistral Large, Command R, or Yi-34B, the M2 Ultra is vastly superior because it fits them *and* runs them at lightning speed.
 *   **You hate troubleshooting:** You want to download an app and have it work immediately.
+
+The M2 Ultra with **192GB of RAM** is effectively the "Holy Grail" of consumer-grade local AI. It is one of the only single devices on the planet that you can buy off a shelf, plug into a wall, and use to run "Goliath-class" models (100B+ parameters) without building a server rack.
+
+However, it comes with a massive price tag (typically **$5,600+**) and diminishing returns on speed.
+
+##M2 Ultra 192 GB
+
+### **1. What does 192GB actually let you do?**
+Unlike the 64GB version (which struggles with 70B models), the 192GB version opens up a completely new tier of AI:
+
+*   **Llama-3-70B (Uncompressed / FP16):** You can run the full, uncompressed model. It will be "perfect" quality (no quantization errors).
+*   **The "Goliath" Tier (100B - 180B):** This is the main selling point. You can run massive models like **Falcon 180B** or **Mistral Large (123B)**. These are generally smarter than Llama-3-70B but impossible to run on almost any other consumer hardware.
+*   **Llama-3.1-405B:** *Technically* possible if you heavily compress it (to Q3 or Q2 quantization). It will run, but it will be slow (see benchmarks below).
+
+### **2. The "Real" VRAM Limit (Crucial)**
+Just like the 64GB model, macOS reserves RAM for the system.
+*   **Default Limit:** Out of the box, you only get access to roughly **144GB** for AI (75% limit).
+*   **The "Unlock" Command:** On the 192GB model, using the terminal command (`sudo sysctl iogpu.wired_limit_mb=...`) is almost mandatory if you want to run the biggest models. This can safely unlock about **175GB - 180GB** for the GPU, leaving ~12GB for the OS.
+
+### **3. Performance Benchmarks (Estimates)**
+The 800GB/s bandwidth is fast, but when models get this huge, the sheer amount of data slows things down.
+
+| Model | Quantization | VRAM Used | Speed (Token/s) | Experience |
+| :--- | :--- | :--- | :--- | :--- |
+| **Llama-3-70B** | **FP16 (Perfect)** | ~140 GB | **~7 - 9 t/s** | Smooth reading speed. High accuracy. |
+| **Llama-3-70B** | Q8 (Near Perfect) | ~75 GB | **~12 - 15 t/s** | Very fast and snappy. |
+| **Mistral Large (123B)** | Q4_K_M | ~75 GB | **~10 - 12 t/s** | Excellent balance of huge smarts + speed. |
+| **Falcon 180B** | Q4 / Q5 | ~120 - 140 GB | **~4 - 6 t/s** | Slower than reading speed, but usable. |
+| **Llama-3.1-405B** | Q3_K_S (High Compression) | ~170 GB | **~1.5 - 2 t/s** | **Painfully slow.** "Slideshow" speed. |
+
+### **4. M2 Ultra 192GB vs. The Competition**
+
+#### **Vs. Dual Nvidia RTX 3090/4090s (48GB VRAM)**
+*   **The Nvidia Build:** You would need **3x or 4x RTX 3090s/4090s** to match the memory of one Mac Studio.
+*   **Cost:** 4x Used 3090s + Motherboard + PSU ≈ $3,500 - $4,500. (Cheaper than Mac).
+*   **Comparison:** The Nvidia rig will be **loud, hot, and power-hungry** (1500W+ vs Mac's 100W), but it will be **faster** for token generation and capable of actual training/fine-tuning. The Mac is a silent, elegant box that sits on your desk.
+
+#### **Vs. Ryzen AI Max+ 395 (128GB)**
+*   **The Mac 192GB** creates a tier that the Ryzen simply cannot touch.
+*   The Ryzen (128GB) stops at ~100GB usable VRAM. It cannot run Falcon 180B or Llama-405B.
+*   If you need to run models larger than 100GB, the Mac is the only integrated option.
+
+### **The Verdict**
+**Buy the M2 Ultra 192GB if:**
+1.  **Budget is not an issue.** You are willing to drop ~$6k.
+2.  **You are a "Model Archivist":** You want to run the absolute largest open-source models available (Falcon 180B, Command R+, massive merges) and have them fit in memory.
+3.  **Silence is golden:** You want a silent workspace, not a roaring GPU server rack.
+
+**Do NOT buy it if:**
+1.  **You expect 405B to be fast.** 2 tokens/second is agonizing for chatting. It is only useful for automated tasks where you can walk away.
+2.  **You only use 70B models.** The 192GB capacity is wasted on them unless you run unquantized FP16 (which is rarely worth the speed drop vs Q8). A 96GB/128GB M2/M3 Max is much better value for 70B models.
