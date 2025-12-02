@@ -100,7 +100,7 @@ The M2 Ultra with **192GB of RAM** is effectively the "Holy Grail" of consumer-g
 
 However, it comes with a massive price tag (typically **$5,600+**) and diminishing returns on speed.
 
-##M2 **Ultra 192 GB**
+**M2Ultra 192 GB**
 
 ### **1. What does 192GB actually let you do?**
 Unlike the 64GB version (which struggles with 70B models), the 192GB version opens up a completely new tier of AI:
